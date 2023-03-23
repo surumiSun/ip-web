@@ -1,39 +1,21 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap4\Html;
 
-/** @var yii\web\View $this */
-/** @var app\models\News $model */
-
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'News', 'url' => ['index']];
+$this->title = nl2br(Html::encode($model->title));
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="news-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'title:ntext',
-            'text:ntext',
-            'onCreate',
-        ],
-    ]) ?>
-
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title"><?= $this->title ?></h1>
+            <p class="card-text">Дата создания: <?= $model->onCreate ?></p>
+            <p class="card-text"><?= nl2br($model->text) ?></p>
+            <?php if (Yii::$app->user->identity->isAdmin) : ?>
+                <a href="<?= Url::to(['update', 'id' => $model->id]) ?>" class="btn btn-primary">Редактировать</a>
+                <a href="<?= Url::to(['delete', 'id' => $model->id]) ?>" class="btn btn-danger" data-method="post" data-confirm="Вы действительно хотите удалить эту новость?">Удалить</a>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>

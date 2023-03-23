@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "news".
@@ -45,5 +46,15 @@ class News extends \yii\db\ActiveRecord
             'text' => 'Текст',
             'onCreate' => 'Дата создания',
         ];
+    }
+
+    public function getSafeTitle()
+    {
+        return nl2br(Html::encode($this->title));
+    }
+
+    public function getSafeText()
+    {
+        return nl2br(Html::encode($this->text));
     }
 }

@@ -18,6 +18,7 @@ class m230322_065239_news extends Migration
 
     public function safeDown()
     {
+        $this->truncateTable(static::NAME);
         $this->dropTable(static::NAME);
     }
 }
